@@ -1,0 +1,17 @@
+{
+    "name": "hytmng/php-generator",
+    "description": "PHPのコードを定義・構築・ファイル出力までをサポートするライブラリ",
+    "autoload": {
+        "psr-4": {
+            "Hytmng\\PhpGenerator\\": "src/PhpGenerator/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Tominaga Hayato"
+        }
+    ],
+    "require-dev": {
+        "phpunit/phpunit": "^12.0"
+    }
+}
