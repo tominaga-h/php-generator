@@ -55,6 +55,14 @@ class PhpClassBuilder extends AbstractBuilder
 	 */
 	public function setNamespace(string $namespace): self
 	{
+		if (\str_starts_with($namespace, self::NAMESPACE_SEPARATOR)) {
+			$namespace = ltrim($namespace, self::NAMESPACE_SEPARATOR);
+		}
+
+		if (\str_ends_with($namespace, self::NAMESPACE_SEPARATOR)) {
+			$namespace = rtrim($namespace, self::NAMESPACE_SEPARATOR);
+		}
+
 		if (\str_contains($namespace, self::NAMESPACE_SEPARATOR)) {
 			$namespaces = \explode(self::NAMESPACE_SEPARATOR, $namespace);
 			$this->namespaces = \array_merge($this->namespaces, $namespaces);

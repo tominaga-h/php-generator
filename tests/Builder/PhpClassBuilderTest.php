@@ -52,4 +52,22 @@ class PhpClassBuilderTest extends TestCase
 		$this->assertEquals($expected, $actual);
 	}
 
+	public function testNamespace_withSeparator_atStart()
+	{
+		$this->builder->setNamespace('\\Root');
+
+		$actual = $this->builder->getNamespaces();
+		$expected = ['Root'];
+		$this->assertEquals($expected, $actual);
+	}
+
+	public function testNamespace_withSeparator_atEnd()
+	{
+		$this->builder->setNamespace('Root\\');
+
+		$actual = $this->builder->getNamespaces();
+		$expected = ['Root'];
+		$this->assertEquals($expected, $actual);
+	}
+
 }
