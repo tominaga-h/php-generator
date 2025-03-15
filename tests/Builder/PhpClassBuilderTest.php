@@ -3,7 +3,7 @@
 namespace Tests\Builder;
 
 use PHPUnit\Framework\TestCase;
-use Hytmng\PhpGenerator\Builder\PhpClassBuilder;
+use Tests\Builder\PhpClassBuilderForTest;
 use Hytmng\PhpGenerator\Builder\PhpClassType;
 
 /**
@@ -18,11 +18,11 @@ use Hytmng\PhpGenerator\Builder\PhpClassType;
  */
 class PhpClassBuilderTest extends TestCase
 {
-	private PhpClassBuilder $builder;
+	private PhpClassBuilderForTest $builder;
 
 	protected function setUp(): void
 	{
-		$this->builder = new PhpClassBuilder('TestClass');
+		$this->builder = new PhpClassBuilderForTest('TestClass');
 	}
 
 	public function testNamespace_withSeparator()

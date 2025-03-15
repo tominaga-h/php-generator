@@ -11,15 +11,15 @@ use Hytmng\PhpGenerator\Builder\PhpClassType;
 class PhpClassBuilder extends AbstractBuilder
 {
 	// クラス名
-	private string $className;
+	protected string $className;
 	// クラスの型
-	private PhpClassType $classType;
+	protected PhpClassType $classType;
 	// 名前空間
-	private array $namespaces;
+	protected array $namespaces;
 	// プロパティ
-	private array $properties;
+	protected array $properties;
 	// メソッド
-	private array $methods;
+	protected array $methods;
 
 	// 名前空間の区切り文字
 	private const NAMESPACE_SEPARATOR = '\\';
@@ -72,12 +72,9 @@ class PhpClassBuilder extends AbstractBuilder
 		$this->namespaces[] = $namespace;
 		return $this;
 	}
-
-	public function getNamespaces(): array
-	{
-		return $this->namespaces;
-	}
-
+	/**
+	 * @return string 名前空間の文字列
+	 */
 	public function getNamespace(): string
 	{
 		return \implode(self::NAMESPACE_SEPARATOR, $this->namespaces);
