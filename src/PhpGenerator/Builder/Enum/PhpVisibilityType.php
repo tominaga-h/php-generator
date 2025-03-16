@@ -5,10 +5,10 @@ namespace Hytmng\PhpGenerator\Builder\Enum;
 /**
  * PHPのアクセス権
  */
-enum PhpVisibilityType
+enum PhpVisibilityType:string
 {
-	case PUBLIC;
-	case PRIVATE;
-	case PROTECTED;
-	case FINAL;
+	case PUBLIC = 'public';
+	case PRIVATE = 'private';
+	case PROTECTED = 'protected';
+	case FINAL = 'final';
 }
