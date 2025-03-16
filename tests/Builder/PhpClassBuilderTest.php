@@ -4,7 +4,7 @@ namespace Tests\Builder;
 
 use PHPUnit\Framework\TestCase;
 use Tests\Builder\PhpClassBuilderForTest;
-use Hytmng\PhpGenerator\Builder\PhpClassType;
+use Hytmng\PhpGenerator\Builder\Enum\PhpClassType;
 
 /**
  * PhpClassBuilderのテスト

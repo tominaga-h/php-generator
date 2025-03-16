@@ -1,6 +1,6 @@
 <?php
 
-namespace Hytmng\PhpGenerator\Builder;
+namespace Hytmng\PhpGenerator\Builder\Enum;
 
 /**
  * PHPクラスの型

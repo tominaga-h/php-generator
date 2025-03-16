@@ -3,7 +3,7 @@
 namespace Tests\Builder;
 
 use Hytmng\PhpGenerator\Builder\PhpClassBuilder;
-use Hytmng\PhpGenerator\Builder\PhpClassType;
+use Hytmng\PhpGenerator\Builder\Enum\PhpClassType;
 
 /**
  * PhpClassBuilderを継承しテスト用のメソッドを追加したクラス

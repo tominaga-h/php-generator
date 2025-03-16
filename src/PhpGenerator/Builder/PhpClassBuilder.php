@@ -3,7 +3,7 @@
 namespace Hytmng\PhpGenerator\Builder;
 
 use Hytmng\PhpGenerator\Builder\AbstractBuilder;
-use Hytmng\PhpGenerator\Builder\PhpClassType;
+use Hytmng\PhpGenerator\Builder\Enum\PhpClassType;
 
 /**
  * PHPのクラスを構築するビルダー
