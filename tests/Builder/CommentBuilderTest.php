@@ -43,7 +43,27 @@ class CommentBuilderTest extends TestCase
 		$builder->setDescription('description');
 
 		$actual = $builder->build();
-		$expected = "/**\n * comment\n * \n * description\n */\n";
+		$expected = "/**\n"
+			. " * comment\n"
+			. " * \n"
+			. " * description\n"
+			. " */\n";
+		$this->assertSame($expected, $actual);
+	}
+
+	public function testBuild_multiline_multilineDescription()
+	{
+		$builder = new CommentBuilder('comment');
+		$builder->setDescription("description\ndescription\ndescription");
+
+		$actual = $builder->build();
+		$expected = "/**\n"
+			. " * comment\n"
+			. " * \n"
+			. " * description\n"
+			. " * description\n"
+			. " * description\n"
+			. " */\n";
 		$this->assertSame($expected, $actual);
 	}
 }

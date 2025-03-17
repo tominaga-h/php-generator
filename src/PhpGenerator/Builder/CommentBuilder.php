@@ -56,7 +56,6 @@ class CommentBuilder extends AbstractBuilder
     /**
      * ==================================================
      * コメントの種類
-     * ==================================================
      */
 
     // inline comment
@@ -80,6 +79,13 @@ class CommentBuilder extends AbstractBuilder
      * @return string
      */
 
+    /**
+     * ==================================================
+     */
+
+    /**
+     * コメントをビルドする
+     */
     public function build(): string
     {
         $this->buildStart()
@@ -150,10 +156,18 @@ class CommentBuilder extends AbstractBuilder
             return $this;
         }
 
-        //  *
-        //  * description
+        //  * （空行追加）
         $this->buildEmptyLine();
-        $this->content .= $this->beMultilineContent($this->description);
+
+        // 複数行のdescriptionに対応
+        if (\str_contains($this->description, PHP_EOL)) {
+            $descriptions = \explode(PHP_EOL, $this->description);
+            $this->content .= self::SYMBOL_MULTILINE_CONTENT;
+            $this->content .= \implode(PHP_EOL . self::SYMBOL_MULTILINE_CONTENT, $descriptions);
+            $this->content .= PHP_EOL;
+        } else {
+            $this->content .= $this->beMultilineContent($this->description);
+        }
         return $this;
     }
 }
