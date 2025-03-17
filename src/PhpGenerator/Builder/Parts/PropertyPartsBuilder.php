@@ -40,12 +40,11 @@ class PropertyPartsBuilder extends AbstractPartsBuilder
 
 	public function build(): string
 	{
-		$this->buildStart()
+		return $this->buildStart()
 			->buildVisibility()
 			->buildType()
 			->buildVariable()
 			->buildEnd();
-		return $this->content;
 	}
 
 	protected function buildVisibility(): self

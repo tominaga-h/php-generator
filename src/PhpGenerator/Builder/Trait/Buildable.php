@@ -21,12 +21,15 @@ trait Buildable
     }
 
     /**
-     * ビルドを終える（セミコロンを追加する）
+     * ビルドを終え、ビルド結果の文字列を返す
+	 *
+	 * @return string ビルド結果の文字列
      */
-    protected function buildEnd(): static
+    protected function buildEnd(): string
     {
+		// NOTE: 将来的にセミコロンを追加する処理はPropertyPartsBuilderに移植するかも
         $this->content .= self::SYMBOL_SEMICOLON;
-        return $this;
+        return $this->content;
     }
 
     /**

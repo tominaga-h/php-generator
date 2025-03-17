@@ -88,11 +88,11 @@ class CommentBuilder extends AbstractBuilder
      */
     public function build(): string
     {
-        $this->buildStart()
+        // TODO: PHPDocのビルド
+        return $this->buildStart()
             ->buildComment()
             ->buildDescription()
             ->buildEnd();
-        return $this->content;
     }
 
     /**
@@ -111,16 +111,18 @@ class CommentBuilder extends AbstractBuilder
     }
 
     /**
-     * ビルドを終える
+     * ビルドを終え、ビルド結果の文字列を返す
+     *
+     * @return string ビルド結果の文字列
      */
-    protected function buildEnd(): self
+    protected function buildEnd(): string
     {
         if (!$this->isInline) {
             //  */\n
             $this->content .= $this->withNewLine(self::SYMBOL_MULTILINE_END);
         }
 
-        return $this;
+        return $this->content;
     }
 
     /**
