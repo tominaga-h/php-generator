@@ -160,9 +160,12 @@ class CommentBuilder extends AbstractBuilder
         $this->buildEmptyLine();
 
         // 複数行のdescriptionに対応
+        // 例: setDescription('description\ndescription\ndescription')
         if (\str_contains($this->description, PHP_EOL)) {
+            // ['description', 'description', 'description']
             $descriptions = \explode(PHP_EOL, $this->description);
             $this->content .= self::SYMBOL_MULTILINE_CONTENT;
+            // description\n * description\n * description
             $this->content .= \implode(PHP_EOL . self::SYMBOL_MULTILINE_CONTENT, $descriptions);
             $this->content .= PHP_EOL;
         } else {
