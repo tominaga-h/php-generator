@@ -14,6 +14,7 @@ class PropertyPartsBuilder extends AbstractPartsBuilder
 {
 	use Buildable;
 
+	// 変数名
 	protected string $name;
 	// 変数の型
 	protected string $type;

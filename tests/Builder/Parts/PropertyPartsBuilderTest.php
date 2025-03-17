@@ -34,7 +34,7 @@ class PropertyPartsBuilderTest extends TestCase
 		);
 
 		$actual = $this->builder->build();
-		$expected = 'public string $test;';
+		$expected = 'protected int $test;';
 		$this->assertEquals($expected, $actual);
 	}
 }
