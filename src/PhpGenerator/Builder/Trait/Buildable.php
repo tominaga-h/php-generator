@@ -67,4 +67,12 @@ trait Buildable
     {
         return self::SYMBOL_VAR . $varName;
     }
+
+	/**
+	 * 指定された文字列の右側に改行を追加する
+	 */
+	protected function withNewLine(string $str): string
+	{
+		return $str . PHP_EOL;
+	}
 }
