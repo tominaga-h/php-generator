@@ -32,6 +32,7 @@ class CommentBuilder extends AbstractBuilder
     public function __construct(string $comment)
     {
         $this->comment = $comment;
+        $this->description = '';
     }
 
     /**
@@ -83,6 +84,7 @@ class CommentBuilder extends AbstractBuilder
     {
         $this->buildStart()
             ->buildComment()
+            ->buildDescription()
             ->buildEnd();
         return $this->content;
     }
@@ -115,6 +117,23 @@ class CommentBuilder extends AbstractBuilder
         return $this;
     }
 
+    /**
+     * 文字列を複数行コメントの本文に変換する
+     */
+    protected function beMultilineContent(string $str): string
+    {
+        return $this->withNewLine(self::SYMBOL_MULTILINE_CONTENT . $str);
+    }
+
+    /**
+     * 複数行コメントの空行を追加する
+     */
+    protected function buildEmptyLine(): self
+    {
+        $this->content .= $this->withNewLine(self::SYMBOL_MULTILINE_CONTENT);
+        return $this;
+    }
+
     protected function buildComment(): self
     {
         if (!$this->isInline) {
@@ -122,6 +141,19 @@ class CommentBuilder extends AbstractBuilder
         }
 
         $this->content .= $this->withNewLine($this->comment);
+        return $this;
+    }
+
+    protected function buildDescription(): self
+    {
+        if ($this->isInline || empty($this->description)) {
+            return $this;
+        }
+
+        //  *
+        //  * description
+        $this->buildEmptyLine();
+        $this->content .= $this->beMultilineContent($this->description);
         return $this;
     }
 }
