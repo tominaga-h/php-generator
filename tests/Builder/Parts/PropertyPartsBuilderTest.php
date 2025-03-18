@@ -14,11 +14,10 @@ class PropertyPartsBuilderTest extends TestCase
 
 	public function testBuild_public_string()
 	{
-		$this->builder = new PropertyPartsBuilder(
-			'test',
-			PhpVariableType::STRING,
-			PhpVisibilityType::PUBLIC
-		);
+		$this->builder = new PropertyPartsBuilder();
+		$this->builder->setVariableName('test')
+			->setVariableType(PhpVariableType::STRING)
+			->setVisibility(PhpVisibilityType::PUBLIC);
 
 		$actual = $this->builder->build();
 		$expected = 'public string $test;';
@@ -27,11 +26,10 @@ class PropertyPartsBuilderTest extends TestCase
 
 	public function testBuild_protected_int()
 	{
-		$this->builder = new PropertyPartsBuilder(
-			'test',
-			PhpVariableType::INT,
-			PhpVisibilityType::PROTECTED
-		);
+		$this->builder = new PropertyPartsBuilder();
+		$this->builder->setVariableName('test')
+			->setVariableType(PhpVariableType::INT)
+			->setVisibility(PhpVisibilityType::PROTECTED);
 
 		$actual = $this->builder->build();
 		$expected = 'protected int $test;';

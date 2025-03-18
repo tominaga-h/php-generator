@@ -9,8 +9,8 @@ class CommentBuilderTest extends TestCase
 {
 	public function testBuild_inline()
 	{
-		$builder = new CommentBuilder('comment');
-		$builder->setInline();
+		$builder = new CommentBuilder();
+		$builder->setComment('comment')->setInline();
 
 		$actual = $builder->build();
 		$expected = "// comment\n";
@@ -19,9 +19,10 @@ class CommentBuilderTest extends TestCase
 
 	public function testBuild_inline_withoutDescription()
 	{
-		$builder = new CommentBuilder('comment');
-		$builder->setInline();
-		$builder->setDescription('description');
+		$builder = new CommentBuilder();
+		$builder->setComment('comment')
+			->setDescription('description')
+			->setInline();
 
 		$actual = $builder->build();
 		$expected = "// comment\n";
@@ -30,7 +31,8 @@ class CommentBuilderTest extends TestCase
 
 	public function testBuild_multiline()
 	{
-		$builder = new CommentBuilder('comment');
+		$builder = new CommentBuilder();
+		$builder->setComment('comment');
 
 		$actual = $builder->build();
 		$expected = "/**\n * comment\n */\n";
@@ -39,8 +41,8 @@ class CommentBuilderTest extends TestCase
 
 	public function testBuild_multiline_description()
 	{
-		$builder = new CommentBuilder('comment');
-		$builder->setDescription('description');
+		$builder = new CommentBuilder();
+		$builder->setComment('comment')->setDescription('description');
 
 		$actual = $builder->build();
 		$expected = "/**\n"
@@ -53,8 +55,9 @@ class CommentBuilderTest extends TestCase
 
 	public function testBuild_multiline_multilineDescription()
 	{
-		$builder = new CommentBuilder('comment');
-		$builder->setDescription("description\ndescription\ndescription");
+		$builder = new CommentBuilder();
+		$builder->setComment('comment')
+			->setDescription("description\ndescription\ndescription");
 
 		$actual = $builder->build();
 		$expected = "/**\n"

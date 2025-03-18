@@ -24,15 +24,22 @@ class CommentBuilder extends AbstractBuilder
     private const SYMBOL_MULTILINE_CONTENT = ' * ';
     private const SYMBOL_MULTILINE_END = ' */';
 
+    public function __construct()
+    {
+        $this->comment = '';
+        $this->description = '';
+    }
+
     /**
-     * コンストラクタ
+     * コメントを設定する
      *
      * @param string $comment コメントに指定する文字列
+     * @return self
      */
-    public function __construct(string $comment)
+    public function setComment(string $comment): self
     {
         $this->comment = $comment;
-        $this->description = '';
+        return $this;
     }
 
     /**
