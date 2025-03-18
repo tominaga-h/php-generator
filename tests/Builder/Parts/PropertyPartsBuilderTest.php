@@ -35,4 +35,24 @@ class PropertyPartsBuilderTest extends TestCase
 		$expected = 'protected int $test;';
 		$this->assertEquals($expected, $actual);
 	}
+
+	public function testBuild_withComment()
+	{
+		$this->builder = new PropertyPartsBuilder();
+		$this->builder
+			->setVariableName('test')
+			->setVariableType(PhpVariableType::STRING)
+			->setVisibility(PhpVisibilityType::PUBLIC)
+			->setComment('comment')
+			->setDescription('description');
+
+		$actual = $this->builder->build();
+		$expected = "/**\n"
+			. " * comment\n"
+			. " * \n"
+			. " * description\n"
+			. " */\n"
+			. "public string \$test;";
+		$this->assertEquals($expected, $actual);
+	}
 }

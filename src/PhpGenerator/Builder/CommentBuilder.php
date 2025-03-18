@@ -61,6 +61,17 @@ class CommentBuilder extends AbstractBuilder
     }
 
     /**
+     * 既にcommentが設定されていればtrue、未設定であればfalseを返す
+     * descriptionの設定は関わらない
+     *
+     * @return bool
+     */
+    public function commentSettingExists(): bool
+    {
+        return $this->comment !== '';
+    }
+
+    /**
      * ==================================================
      * コメントの種類
      */

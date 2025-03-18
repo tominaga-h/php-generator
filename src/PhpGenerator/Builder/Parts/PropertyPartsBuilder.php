@@ -6,6 +6,7 @@ use Hytmng\PhpGenerator\Builder\Parts\AbstractPartsBuilder;
 use Hytmng\PhpGenerator\Builder\Enum\PhpVisibilityType;
 use Hytmng\PhpGenerator\Builder\Enum\PhpVariableType;
 use Hytmng\PhpGenerator\Builder\Trait\Buildable;
+use Hytmng\PhpGenerator\Builder\Trait\Commentable;
 use Hytmng\PhpGenerator\Builder\CommentBuilder;
 
 /**
@@ -14,6 +15,7 @@ use Hytmng\PhpGenerator\Builder\CommentBuilder;
 class PropertyPartsBuilder extends AbstractPartsBuilder
 {
 	use Buildable;
+	use Commentable;
 
 	// 変数名
 	protected string $name;
@@ -21,13 +23,12 @@ class PropertyPartsBuilder extends AbstractPartsBuilder
 	protected string $type;
 	// アクセス権
 	protected string $visibility;
-	// コメントビルダー
-	protected CommentBuilder $commentBuilder;
 
 	public function __construct() {
 		$this->name = '';
 		$this->type = '';
 		$this->visibility = '';
+		$this->commentBuilder = new CommentBuilder();
 	}
 
 	/**
@@ -63,21 +64,10 @@ class PropertyPartsBuilder extends AbstractPartsBuilder
 		return $this;
 	}
 
-	/**
-	 * コメントビルダーを設定する
-	 *
-	 * @param CommentBuilder $commentBuilder コメントビルダー
-	 * @return self
-	 */
-	public function setCommentBuilder(CommentBuilder $commentBuilder): self
-	{
-		$this->commentBuilder = $commentBuilder;
-		return $this;
-	}
-
 	public function build(): string
 	{
 		return $this->buildStart()
+			->buildComment()
 			->buildVisibility()
 			->buildType()
 			->buildVariable()
