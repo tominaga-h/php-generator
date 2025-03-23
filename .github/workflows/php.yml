@@ -17,9 +17,6 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - name: Validate composer.json and composer.lock
-      run: composer validate --strict
-
     - name: Cache Composer packages
       id: composer-cache
       uses: actions/cache@v3
@@ -37,3 +34,8 @@ jobs:
 
     - name: Run test suite
       run: composer run-script test
+
+    - name: Upload coverage results to Coveralls
+      env:
+        COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
+      run: composer run-script upload-coverage

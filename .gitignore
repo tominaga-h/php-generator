@@ -1,4 +1,4 @@
-var/log/*.log
+var/log/
 !var/log/.gitkeep
 var/coverage/*
 !var/coverage/.gitkeep

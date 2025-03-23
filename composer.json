@@ -21,6 +21,7 @@
         "php-coveralls/php-coveralls": "^2.7"
     },
     "scripts": {
-        "test": "./vendor/bin/phpunit"
+        "test": "./vendor/bin/phpunit",
+        "upload-coverage": "./vendor/bin/php-coveralls --coverage_clover=coverage.xml -v"
     }
 }
