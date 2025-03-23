@@ -55,4 +55,20 @@ class PropertyPartsBuilderTest extends TestCase
 			. "public string \$test;\n";
 		$this->assertEquals($expected, $actual);
 	}
+
+	function testBuild_withInlineComment()
+	{
+		$this->builder = new PropertyPartsBuilder();
+		$this->builder
+			->setVariableName('test')
+			->setVariableType(PhpVariableType::STRING)
+			->setVisibility(PhpVisibilityType::PUBLIC)
+			->setComment('comment')
+			->setInline();
+
+		$actual = $this->builder->build();
+		$expected = "// comment\n"
+			. "public string \$test;\n";
+		$this->assertEquals($expected, $actual);
+	}
 }
