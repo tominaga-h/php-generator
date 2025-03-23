@@ -28,7 +28,7 @@ trait Buildable
     protected function buildEnd(): string
     {
 		// NOTE: 将来的にセミコロンを追加する処理はPropertyPartsBuilderに移植するかも
-        $this->content .= self::SYMBOL_SEMICOLON;
+        $this->content .= $this->withNewLine(self::SYMBOL_SEMICOLON);
         return $this->content;
     }
 

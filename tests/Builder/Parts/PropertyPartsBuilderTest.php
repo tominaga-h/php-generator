@@ -20,7 +20,7 @@ class PropertyPartsBuilderTest extends TestCase
 			->setVisibility(PhpVisibilityType::PUBLIC);
 
 		$actual = $this->builder->build();
-		$expected = 'public string $test;';
+		$expected = "public string \$test;\n";
 		$this->assertEquals($expected, $actual);
 	}
 
@@ -32,7 +32,7 @@ class PropertyPartsBuilderTest extends TestCase
 			->setVisibility(PhpVisibilityType::PROTECTED);
 
 		$actual = $this->builder->build();
-		$expected = 'protected int $test;';
+		$expected = "protected int \$test;\n";
 		$this->assertEquals($expected, $actual);
 	}
 
@@ -52,7 +52,7 @@ class PropertyPartsBuilderTest extends TestCase
 			. " * \n"
 			. " * description\n"
 			. " */\n"
-			. "public string \$test;";
+			. "public string \$test;\n";
 		$this->assertEquals($expected, $actual);
 	}
 }
