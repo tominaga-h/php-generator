@@ -28,9 +28,6 @@ trait Commentable
 	 */
 	public function getCommentBuilder(): CommentBuilder
 	{
-		if (!$this->commentBuilder) {
-			$this->setCommentBuilder(new CommentBuilder());
-		}
 		return $this->commentBuilder;
 	}
 

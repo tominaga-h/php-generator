@@ -3,7 +3,7 @@
 ## GENERAL
 
 - [x] テスト環境の構築
-- [ ] githubでテストの実行とcoverageの取得を設定する
+- [x] githubでテストの実行とcoverageの取得を設定する
 
 ## Builder
 

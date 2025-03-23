@@ -6,6 +6,7 @@ use PHPUnit\Framework\TestCase;
 use Hytmng\PhpGenerator\Builder\Parts\PropertyPartsBuilder;
 use Hytmng\PhpGenerator\Builder\Enum\PhpVisibilityType;
 use Hytmng\PhpGenerator\Builder\Enum\PhpVariableType;
+use Hytmng\PhpGenerator\Builder\CommentBuilder;
 
 class PropertyPartsBuilderTest extends TestCase
 {
@@ -69,6 +70,30 @@ class PropertyPartsBuilderTest extends TestCase
 		$actual = $this->builder->build();
 		$expected = "// comment\n"
 			. "public string \$test;\n";
+		$this->assertEquals($expected, $actual);
+	}
+
+	public function testBuild_withMockComment()
+	{
+		$mock = $this->createMock(CommentBuilder::class);
+		$mock->method('build')
+			->willReturn("// mocked comment\n");
+		$mock->method('commentSettingExists')
+			->willReturn(true);
+
+		$this->builder = new PropertyPartsBuilder();
+		$this->builder->setCommentBuilder($mock);
+		$this->builder->setVariableName('test')
+			->setVariableType(PhpVariableType::FLOAT)
+			->setVisibility(PhpVisibilityType::FINAL)
+			->setComment('comment')
+			->setInline();
+
+		$this->assertTrue($this->builder->commentSettingExists());
+
+		$actual = $this->builder->build();
+		$expected = "// mocked comment\n"
+			. "final float \$test;\n";
 		$this->assertEquals($expected, $actual);
 	}
 }
