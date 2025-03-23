@@ -5,8 +5,20 @@
             <directory>tests</directory>
         </testsuite>
     </testsuites>
+    <source>
+        <include>
+            <directory suffix=".php">src</directory>
+        </include>
+    </source>
+    <coverage>
+        <report>
+            <clover outputFile="coverage.xml"/>
+            <html outputDirectory="var/coverage"/>
+        </report>
+    </coverage>
     <php>
         <ini name="display_errors" value="On" />
         <ini name="error_reporting" value="-1" />
+        <ini name="xdebug.mode" value="coverage"/>
     </php>
 </phpunit>
