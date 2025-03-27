@@ -7,7 +7,7 @@ use Hytmng\PhpGenerator\Builder\CommentBuilder;
 trait Commentable
 {
 	// コメントビルダー
-	protected CommentBuilder $commentBuilder;
+	protected ?CommentBuilder $commentBuilder = null;
 
 	/**
 	 * コメントビルダーを設定する
@@ -28,7 +28,7 @@ trait Commentable
 	 */
 	public function getCommentBuilder(): CommentBuilder
 	{
-		return $this->commentBuilder;
+		return $this->commentBuilder ??= new CommentBuilder();
 	}
 
 	public function hasComment(): bool

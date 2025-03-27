@@ -28,7 +28,6 @@ class PropertyPartsBuilder extends AbstractPartsBuilder
 		$this->name = '';
 		$this->type = '';
 		$this->visibility = '';
-		$this->commentBuilder = new CommentBuilder();
 	}
 
 	/**
