@@ -2,19 +2,27 @@
 
 namespace Hytmng\PhpGenerator\Builder;
 
+use Hytmng\PhpGenerator\PhpSyntax;
 use Hytmng\PhpGenerator\Builder\AbstractBuilder;
 use Hytmng\PhpGenerator\Builder\Enum\PhpClassType;
 use Hytmng\PhpGenerator\Builder\Parts\PropertyPartsBuilder;
+use Hytmng\PhpGenerator\Builder\Trait\Buildable;
 
 /**
  * PHPのクラスを構築するビルダー
  */
 class PhpClassBuilder extends AbstractBuilder
 {
+	use Buildable;
+
 	// クラス名
 	protected string $className;
 	// クラスの型
 	protected PhpClassType $classType;
+	// 継承元クラス
+	protected ?string $extends;
+	// 実装元インターフェース
+	protected array $implements;
 	/** @var PropertyPartsBuilder[] $properties */
 	protected array $properties; // クラスのプロパティ
 	// クラスのメソッド
@@ -36,6 +44,64 @@ class PhpClassBuilder extends AbstractBuilder
 		$this->classType = $classType;
 		$this->properties = [];
 		$this->methods = [];
+		$this->extends = null;
+		$this->implements = [];
+	}
+
+	protected function basename(string $class): string
+	{
+		return \basename(\str_replace(PhpSyntax::NAMESPACE_SEPARATOR, '/', $class));
+	}
+
+	protected function containsNamespace(string $class): bool
+	{
+		return \str_contains($class, PhpSyntax::NAMESPACE_SEPARATOR);
+	}
+
+	/**
+	 * 継承元のクラスを設定する
+	 */
+	public function extends(string $class): self
+	{
+		if ($this->containsNamespace($class)) {
+			$class = $this->basename($class);
+		}
+
+		$this->extends = $class;
+		return $this;
+	}
+
+	public function buildExtends(): ?string
+	{
+		if (\is_null($this->extends)) {
+			return null;
+		}
+
+		$this->content .= 'extends ' . $this->extends;
+		return $this->content;
+	}
+
+	/**
+	 * 実装元のインターフェースを設定する
+	 */
+	public function implements(string $interface): self
+	{
+		if ($this->containsNamespace($interface)) {
+			$interface = $this->basename($interface);
+		}
+
+		$this->implements[] = $interface;
+		return $this;
+	}
+
+	public function buildImplements(): ?string
+	{
+		if (\count($this->implements) === 0) {
+			return null;
+		}
+
+		$this->content .= 'implements ' . \implode(', ', $this->implements);
+		return $this->content;
 	}
 
 	/**
@@ -51,6 +117,7 @@ class PhpClassBuilder extends AbstractBuilder
 	{
 		return $this->className;
 	}
+
 
 	public function build(): string
 	{

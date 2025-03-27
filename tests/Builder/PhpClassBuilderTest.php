@@ -4,7 +4,8 @@ namespace Tests\Builder;
 
 use PHPUnit\Framework\TestCase;
 use Hytmng\PhpGenerator\Builder\PhpClassBuilder;
-use Hytmng\PhpGenerator\Builder\Enum\PhpClassType;
+use Hytmng\PhpGenerator\Builder\AbstractBuilder;
+use Hytmng\PhpGenerator\Builder\StringBuilderInterface;
 
 /**
  * PhpClassBuilderのテスト
@@ -29,6 +30,66 @@ class PhpClassBuilderTest extends TestCase
 	{
 		$actual = $this->builder->getClassName();
 		$expected = 'TestClass';
+		$this->assertEquals($expected, $actual);
+	}
+
+	public function testExtends_withNamespace()
+	{
+		$this->builder->extends(AbstractBuilder::class);
+
+		$actual = $this->builder->buildExtends();
+		$expected = 'extends AbstractBuilder';
+		$this->assertEquals($expected, $actual);
+	}
+
+	public function testExtends_withoutNamespace()
+	{
+		$this->builder->extends('AbstractBuilder');
+
+		$actual = $this->builder->buildExtends();
+		$expected = 'extends AbstractBuilder';
+		$this->assertEquals($expected, $actual);
+	}
+
+	public function testExtends_null()
+	{
+		$actual = $this->builder->buildExtends();
+		$expected = null;
+		$this->assertEquals($expected, $actual);
+	}
+
+	public function testImplements_withNamespace()
+	{
+		$this->builder->implements(StringBuilderInterface::class);
+
+		$actual = $this->builder->buildImplements();
+		$expected = 'implements StringBuilderInterface';
+		$this->assertEquals($expected, $actual);
+	}
+
+	public function testImplements_withoutNamespace()
+	{
+		$this->builder->implements('StringBuilderInterface');
+
+		$actual = $this->builder->buildImplements();
+		$expected = 'implements StringBuilderInterface';
+		$this->assertEquals($expected, $actual);
+
+	}
+
+	public function testImplements_multiple()
+	{
+		$this->builder->implements('StringBuilderInterface')->implements('Interface');
+
+		$actual = $this->builder->buildImplements();
+		$expected = 'implements StringBuilderInterface, Interface';
+		$this->assertEquals($expected, $actual);
+	}
+
+	public function testImplements_null()
+	{
+		$actual = $this->builder->buildImplements();
+		$expected = null;
 		$this->assertEquals($expected, $actual);
 	}
 }

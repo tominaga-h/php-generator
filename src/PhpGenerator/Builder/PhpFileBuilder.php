@@ -2,17 +2,14 @@
 
 namespace Hytmng\PhpGenerator\Builder;
 
+use Hytmng\PhpGenerator\PhpSyntax;
 use Hytmng\PhpGenerator\Builder\AbstractBuilder;
-
 class PhpFileBuilder extends AbstractBuilder
 {
 	// ファイルの名前
 	protected string $fileName;
 	// ファイルの名前空間
 	protected array $namespaces;
-
-	// 名前空間の区切り文字
-	private const NAMESPACE_SEPARATOR = '\\';
 
 	public function __construct(string $fileName)
 	{
@@ -32,16 +29,16 @@ class PhpFileBuilder extends AbstractBuilder
 	 */
 	public function setNamespace(string $namespace): self
 	{
-		if (\str_starts_with($namespace, self::NAMESPACE_SEPARATOR)) {
-			$namespace = ltrim($namespace, self::NAMESPACE_SEPARATOR);
+		if (\str_starts_with($namespace, PhpSyntax::NAMESPACE_SEPARATOR)) {
+			$namespace = ltrim($namespace, PhpSyntax::NAMESPACE_SEPARATOR);
 		}
 
-		if (\str_ends_with($namespace, self::NAMESPACE_SEPARATOR)) {
-			$namespace = rtrim($namespace, self::NAMESPACE_SEPARATOR);
+		if (\str_ends_with($namespace, PhpSyntax::NAMESPACE_SEPARATOR)) {
+			$namespace = rtrim($namespace, PhpSyntax::NAMESPACE_SEPARATOR);
 		}
 
-		if (\str_contains($namespace, self::NAMESPACE_SEPARATOR)) {
-			$namespaces = \explode(self::NAMESPACE_SEPARATOR, $namespace);
+		if (\str_contains($namespace, PhpSyntax::NAMESPACE_SEPARATOR)) {
+			$namespaces = \explode(PhpSyntax::NAMESPACE_SEPARATOR, $namespace);
 			$this->namespaces = \array_merge($this->namespaces, $namespaces);
 			return $this;
 		}
@@ -54,7 +51,7 @@ class PhpFileBuilder extends AbstractBuilder
 	 */
 	public function getNamespace(): string
 	{
-		return \implode(self::NAMESPACE_SEPARATOR, $this->namespaces);
+		return \implode(PhpSyntax::NAMESPACE_SEPARATOR, $this->namespaces);
 	}
 
 	public function build(): string
