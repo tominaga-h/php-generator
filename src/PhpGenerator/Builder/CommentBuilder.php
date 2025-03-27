@@ -149,7 +149,7 @@ class CommentBuilder extends AbstractBuilder
     /**
      * 文字列を複数行コメントの本文に変換する
      */
-    protected function beMultilineContent(string $str): string
+    protected function asMultilineContent(string $str): string
     {
         return $this->withNewLine(self::SYMBOL_MULTILINE_CONTENT . $str);
     }
@@ -192,7 +192,7 @@ class CommentBuilder extends AbstractBuilder
             $this->content .= \implode(PHP_EOL . self::SYMBOL_MULTILINE_CONTENT, $descriptions);
             $this->content .= PHP_EOL;
         } else {
-            $this->content .= $this->beMultilineContent($this->description);
+            $this->content .= $this->asMultilineContent($this->description);
         }
         return $this;
     }
