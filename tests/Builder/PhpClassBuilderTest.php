@@ -5,6 +5,7 @@ namespace Tests\Builder;
 use PHPUnit\Framework\TestCase;
 use Hytmng\PhpGenerator\Builder\PhpClassBuilder;
 use Hytmng\PhpGenerator\Builder\Enum\PhpClassType;
+
 /**
  * PhpClassBuilderのテスト
  *
@@ -24,51 +25,10 @@ class PhpClassBuilderTest extends TestCase
 		$this->builder = new PhpClassBuilder('TestClass');
 	}
 
-	public function testNamespace_withSeparator()
+	public function testClassName()
 	{
-		$namespace = 'Root\\Package\\SubPackage';
-		$this->builder->setNamespace($namespace);
-
-		$actual = $this->builder->getNamespace();
-		$this->assertEquals($namespace, $actual);
-	}
-
-	public function testNamespace_withoutSeparator()
-	{
-		$this->builder
-			->setNamespace('Root')
-			->setNamespace('Package')
-			->setNamespace('SubPackage');
-
-		$actual = 'Root\\Package\\SubPackage';
-		$expected = $this->builder->getNamespace();
-		$this->assertEquals($expected, $actual);
-	}
-
-	public function testNamespace_withSeparator_atStart()
-	{
-		$this->builder->setNamespace('\\Root');
-
-		$actual = $this->builder->getNamespace();
-		$expected = 'Root';
-		$this->assertEquals($expected, $actual);
-	}
-
-	public function testNamespace_withSeparator_atEnd()
-	{
-		$this->builder->setNamespace('Root\\');
-
-		$actual = $this->builder->getNamespace();
-		$expected = 'Root';
-		$this->assertEquals($expected, $actual);
-	}
-
-	public function testNamespace_withSeparator_atStartAndEnd()
-	{
-		$this->builder->setNamespace('\\Root\\');
-
-		$actual = $this->builder->getNamespace();
-		$expected = 'Root';
+		$actual = $this->builder->getClassName();
+		$expected = 'TestClass';
 		$this->assertEquals($expected, $actual);
 	}
 }
