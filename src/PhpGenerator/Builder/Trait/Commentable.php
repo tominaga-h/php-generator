@@ -68,10 +68,10 @@ trait Commentable
 	 *
 	 * @return self
 	 */
-	public function setInlineComment(): self
+	public function setAsInlineCommentComment(): self
 	{
 		$builder = $this->getCommentBuilder();
-		$builder->setInline();
+		$builder->setAsInlineComment();
 		return $this;
 	}
 

@@ -10,7 +10,7 @@ class CommentBuilderTest extends TestCase
 	public function testBuild_inline()
 	{
 		$builder = new CommentBuilder();
-		$builder->setComment('comment')->setInline();
+		$builder->setComment('comment')->setAsInlineComment();
 
 		$actual = $builder->build();
 		$expected = "// comment\n";
@@ -22,7 +22,7 @@ class CommentBuilderTest extends TestCase
 		$builder = new CommentBuilder();
 		$builder->setComment('comment')
 			->setDescription('description')
-			->setInline();
+			->setAsInlineComment();
 
 		$actual = $builder->build();
 		$expected = "// comment\n";

@@ -17,7 +17,7 @@ class CommentBuilder extends AbstractBuilder
     // 説明文
     protected string $description;
     // インラインコメントかどうか
-    protected bool $isInline = false;
+    protected bool $isInlineComment = false;
     // コメントが設定されているか
     protected bool $hasComment = false;
 
@@ -57,9 +57,9 @@ class CommentBuilder extends AbstractBuilder
     /**
      * インラインコメントに設定する
      */
-    public function setInline(): self
+    public function setAsInlineComment(): self
     {
-        $this->isInline = true;
+        $this->isInlineComment = true;
         return $this;
     }
 
@@ -121,7 +121,7 @@ class CommentBuilder extends AbstractBuilder
      */
     protected function buildStart(): self
     {
-        if ($this->isInline) {
+        if ($this->isInlineComment) {
             $this->content = self::SYMBOL_INLINE;
             return $this;
         }
@@ -138,7 +138,7 @@ class CommentBuilder extends AbstractBuilder
      */
     protected function buildEnd(): string
     {
-        if (!$this->isInline) {
+        if (!$this->isInlineComment) {
             //  */\n
             $this->content .= $this->withNewLine(self::SYMBOL_MULTILINE_END);
         }
@@ -165,7 +165,7 @@ class CommentBuilder extends AbstractBuilder
 
     protected function buildComment(): self
     {
-        if (!$this->isInline) {
+        if (!$this->isInlineComment) {
             $this->content .= self::SYMBOL_MULTILINE_CONTENT;
         }
 
@@ -175,7 +175,7 @@ class CommentBuilder extends AbstractBuilder
 
     protected function buildDescription(): self
     {
-        if ($this->isInline || empty($this->description)) {
+        if ($this->isInlineComment || empty($this->description)) {
             return $this;
         }
 

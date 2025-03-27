@@ -65,7 +65,7 @@ class PropertyPartsBuilderTest extends TestCase
 			->setVariableType(PhpVariableType::STRING)
 			->setVisibility(PhpVisibilityType::PUBLIC)
 			->setComment('comment')
-			->setInlineComment();
+			->setAsInlineCommentComment();
 
 		$actual = $this->builder->build();
 		$expected = "// comment\n"
@@ -87,7 +87,7 @@ class PropertyPartsBuilderTest extends TestCase
 			->setVariableType(PhpVariableType::FLOAT)
 			->setVisibility(PhpVisibilityType::FINAL)
 			->setComment('comment')
-			->setInlineComment();
+			->setAsInlineCommentComment();
 
 		$this->assertTrue($this->builder->hasComment());
 
