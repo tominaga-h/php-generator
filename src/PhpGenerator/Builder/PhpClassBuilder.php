@@ -4,6 +4,7 @@ namespace Hytmng\PhpGenerator\Builder;
 
 use Hytmng\PhpGenerator\Builder\AbstractBuilder;
 use Hytmng\PhpGenerator\Builder\Enum\PhpClassType;
+use Hytmng\PhpGenerator\Builder\Parts\PropertyPartsBuilder;
 
 /**
  * PHPのクラスを構築するビルダー
@@ -14,11 +15,11 @@ class PhpClassBuilder extends AbstractBuilder
 	protected string $className;
 	// クラスの型
 	protected PhpClassType $classType;
-	// 名前空間
+	// クラスの名前空間
 	protected array $namespaces;
-	// プロパティ
-	protected array $properties;
-	// メソッド
+	/** @var PropertyPartsBuilder[] $properties */
+	protected array $properties; // クラスのプロパティ
+	// クラスのメソッド
 	protected array $methods;
 
 	// 名前空間の区切り文字
@@ -78,6 +79,15 @@ class PhpClassBuilder extends AbstractBuilder
 	public function getNamespace(): string
 	{
 		return \implode(self::NAMESPACE_SEPARATOR, $this->namespaces);
+	}
+
+	/**
+	 * クラスのプロパティを追加する
+	 */
+	public function addProperty(PropertyPartsBuilder $property): self
+	{
+		$this->properties[] = $property;
+		return $this;
 	}
 
 	public function build(): string
