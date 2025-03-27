@@ -12,3 +12,5 @@ test:
 	docker exec -it $(CONTAINER_NAME) composer test
 php:
 	docker exec -it $(CONTAINER_NAME) php -a
+push:
+	make test && git push origin master
