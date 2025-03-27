@@ -18,6 +18,8 @@ class CommentBuilder extends AbstractBuilder
     protected string $description;
     // インラインコメントかどうか
     protected bool $isInline = false;
+    // コメントが設定されているか
+    protected bool $hasComment = false;
 
     private const SYMBOL_INLINE = '// ';
     private const SYMBOL_MULTILINE_START = '/**';
@@ -39,6 +41,7 @@ class CommentBuilder extends AbstractBuilder
     public function setComment(string $comment): self
     {
         $this->comment = $comment;
+        $this->hasComment = true;
         return $this;
     }
 
@@ -66,9 +69,9 @@ class CommentBuilder extends AbstractBuilder
      *
      * @return bool
      */
-    public function commentSettingExists(): bool
+    public function hasComment(): bool
     {
-        return $this->comment !== '';
+        return $this->hasComment;
     }
 
     /**

@@ -78,7 +78,7 @@ class PropertyPartsBuilderTest extends TestCase
 		$mock = $this->createMock(CommentBuilder::class);
 		$mock->method('build')
 			->willReturn("// mocked comment\n");
-		$mock->method('commentSettingExists')
+		$mock->method('hasComment')
 			->willReturn(true);
 
 		$this->builder = new PropertyPartsBuilder();
@@ -89,7 +89,7 @@ class PropertyPartsBuilderTest extends TestCase
 			->setComment('comment')
 			->setInlineComment();
 
-		$this->assertTrue($this->builder->commentSettingExists());
+		$this->assertTrue($this->builder->hasComment());
 
 		$actual = $this->builder->build();
 		$expected = "// mocked comment\n"

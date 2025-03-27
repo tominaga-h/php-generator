@@ -31,10 +31,10 @@ trait Commentable
 		return $this->commentBuilder;
 	}
 
-	public function commentSettingExists(): bool
+	public function hasComment(): bool
 	{
 		$builder = $this->getCommentBuilder();
-		return $builder->commentSettingExists();
+		return $builder->hasComment();
 	}
 
 	/**
@@ -81,7 +81,7 @@ trait Commentable
 	public function buildComment(): self
 	{
 		$builder = $this->getCommentBuilder();
-		if ($builder->commentSettingExists()) {
+		if ($builder->hasComment()) {
 			$this->content .= $builder->build();
 		}
 		return $this;
