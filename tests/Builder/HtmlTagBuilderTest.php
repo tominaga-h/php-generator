@@ -24,7 +24,7 @@ class HtmlTagBuilderTest extends TestCase
 			->setTagContent('content');
 
 		$actual = $this->builder->build();
-		$expected = "<div id=\"id\">\n    content\n</div>\n";
+		$expected = "<div id=\"id\">\n    content\n</div>";
 		$this->assertEquals($expected, $actual);
 	}
 
@@ -35,7 +35,7 @@ class HtmlTagBuilderTest extends TestCase
 			->addTagAttribute('id', 'id');
 
 		$actual = $this->builder->build();
-		$expected = "<div id=\"id\" />\n";
+		$expected = "<div id=\"id\" />";
 		$this->assertEquals($expected, $actual);
 	}
 
@@ -46,7 +46,7 @@ class HtmlTagBuilderTest extends TestCase
 			->setTagContent('content');
 
 		$actual = $this->builder->build();
-		$expected = "<div style=\"color: red; font-size: 12px;\">\n    content\n</div>\n";
+		$expected = "<div style=\"color: red; font-size: 12px;\">\n    content\n</div>";
 		$this->assertEquals($expected, $actual);
 	}
 
@@ -58,7 +58,7 @@ class HtmlTagBuilderTest extends TestCase
 			->setTagContent('content');
 
 		$actual = $this->builder->build();
-		$expected = "<div id=\"button\" class=\"btn btn-primary\">\n    content\n</div>\n";
+		$expected = "<div id=\"button\" class=\"btn btn-primary\">\n    content\n</div>";
 		$this->assertEquals($expected, $actual);
 	}
 
@@ -78,7 +78,7 @@ class HtmlTagBuilderTest extends TestCase
 		$this->builder = new HtmlTagBuilder('img');
 
 		$actual = $this->builder->build();
-		$expected = "<img />\n";
+		$expected = "<img />";
 		$this->assertEquals($expected, $actual);
 	}
 
@@ -95,7 +95,7 @@ class HtmlTagBuilderTest extends TestCase
 			->setTagContent('content');
 
 		$actual = $this->builder->build();
-		$expected = "<div>\n  content\n</div>\n";
+		$expected = "<div>\n  content\n</div>";
 		$this->assertEquals($expected, $actual);
 	}
 
@@ -106,7 +106,19 @@ class HtmlTagBuilderTest extends TestCase
 			->setTagContent("line1\nline2");
 
 		$actual = $this->builder->build();
-		$expected = "<div>\n  line1\n  line2\n</div>\n";
+		$expected = "<div>\n  line1\n  line2\n</div>";
+		$this->assertEquals($expected, $actual);
+	}
+
+	public function testBuild_nest()
+	{
+		$childBuilder = new HtmlTagBuilder('p');
+		$childBuilder ->setTagContent('child');
+
+		$this->builder->setTagContent($childBuilder->build());
+
+		$actual = $this->builder->build();
+		$expected = "<div>\n    <p>\n        child\n    </p>\n</div>";
 		$this->assertEquals($expected, $actual);
 	}
 }
