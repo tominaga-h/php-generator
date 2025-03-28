@@ -2,14 +2,13 @@
 
 namespace Hytmng\PhpGenerator\Builder\Trait;
 
+use Hytmng\PhpGenerator\Symbol;
+
 /**
  * Builderに必要なユーティリティメソッドを提供するトレイト
  */
 trait Buildable
 {
-	private const SYMBOL_VAR = '$';
-    private const SYMBOL_SEMICOLON = ';';
-    private const SYMBOL_SPACE = ' ';
 
     /**
      * ビルドを開始する（文字列を初期化する）
@@ -26,7 +25,7 @@ trait Buildable
     protected function buildEnd(): self
     {
 		// NOTE: 将来的にセミコロンを追加する処理はPropertyPartsBuilderに移植するかも
-        $this->content .= $this->withNewLine(self::SYMBOL_SEMICOLON);
+        $this->content .= $this->withNewLine(Symbol::SEMICOLON);
         return $this;
     }
 
@@ -35,7 +34,7 @@ trait Buildable
      */
     protected function buildSpace(): static
     {
-        $this->content .= self::SYMBOL_SPACE;
+        $this->content .= Symbol::SPACE;
         return $this;
     }
 
@@ -46,7 +45,7 @@ trait Buildable
      */
     protected function withSpaceRight(string $str): string
     {
-        return $str . self::SYMBOL_SPACE;
+        return $str . Symbol::SPACE;
     }
 
     /**
@@ -56,7 +55,7 @@ trait Buildable
      */
     protected function withSpaceLeft(string $str): string
     {
-        return self::SYMBOL_SPACE . $str;
+        return Symbol::SPACE . $str;
     }
 
     /**
@@ -66,7 +65,7 @@ trait Buildable
      */
     protected function beVariable(string $varName): string
     {
-        return self::SYMBOL_VAR . $varName;
+        return Symbol::VAR . $varName;
     }
 
 	/**

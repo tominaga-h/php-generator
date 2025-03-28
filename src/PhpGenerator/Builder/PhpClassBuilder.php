@@ -2,7 +2,7 @@
 
 namespace Hytmng\PhpGenerator\Builder;
 
-use Hytmng\PhpGenerator\PhpSyntax;
+use Hytmng\PhpGenerator\Symbol;
 use Hytmng\PhpGenerator\Builder\AbstractBuilder;
 use Hytmng\PhpGenerator\Builder\Enum\PhpClassType;
 use Hytmng\PhpGenerator\Builder\Parts\PropertyPartsBuilder;
@@ -50,12 +50,12 @@ class PhpClassBuilder extends AbstractBuilder
 
 	protected function basename(string $class): string
 	{
-		return \basename(\str_replace(PhpSyntax::NAMESPACE_SEPARATOR, '/', $class));
+		return \basename(\str_replace(Symbol::NAMESPACE_SEPARATOR, '/', $class));
 	}
 
 	protected function containsNamespace(string $class): bool
 	{
-		return \str_contains($class, PhpSyntax::NAMESPACE_SEPARATOR);
+		return \str_contains($class, Symbol::NAMESPACE_SEPARATOR);
 	}
 
 	/**

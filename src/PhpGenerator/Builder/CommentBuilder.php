@@ -4,6 +4,7 @@ namespace Hytmng\PhpGenerator\Builder;
 
 use Hytmng\PhpGenerator\Builder\AbstractBuilder;
 use Hytmng\PhpGenerator\Builder\Trait\Buildable;
+use Hytmng\PhpGenerator\Symbol;
 
 /**
  * コメントを構築するビルダー
@@ -20,11 +21,6 @@ class CommentBuilder extends AbstractBuilder
     protected bool $isInlineComment = false;
     // コメントが設定されているか
     protected bool $hasComment = false;
-
-    private const SYMBOL_INLINE = '// ';
-    private const SYMBOL_MULTILINE_START = '/**';
-    private const SYMBOL_MULTILINE_CONTENT = ' * ';
-    private const SYMBOL_MULTILINE_END = ' */';
 
     public function __construct()
     {
@@ -123,12 +119,12 @@ class CommentBuilder extends AbstractBuilder
     protected function buildStart(): self
     {
         if ($this->isInlineComment) {
-            $this->content = self::SYMBOL_INLINE;
+            $this->content = Symbol::COMMENT_INLINE;
             return $this;
         }
 
         // /**\n
-        $this->content = $this->withNewLine(self::SYMBOL_MULTILINE_START);
+        $this->content = $this->withNewLine(Symbol::COMMENT_MULTILINE_START);
         return $this;
     }
 
@@ -139,7 +135,7 @@ class CommentBuilder extends AbstractBuilder
     {
         if (!$this->isInlineComment) {
             //  */\n
-            $this->content .= $this->withNewLine(self::SYMBOL_MULTILINE_END);
+            $this->content .= $this->withNewLine(Symbol::COMMENT_MULTILINE_END);
         }
 
         return $this;
@@ -150,7 +146,7 @@ class CommentBuilder extends AbstractBuilder
      */
     protected function asMultilineContent(string $str): string
     {
-        return $this->withNewLine(self::SYMBOL_MULTILINE_CONTENT . $str);
+        return $this->withNewLine(Symbol::COMMENT_MULTILINE_CONTENT . $str);
     }
 
     /**
@@ -158,14 +154,14 @@ class CommentBuilder extends AbstractBuilder
      */
     protected function buildEmptyLine(): self
     {
-        $this->content .= $this->withNewLine(self::SYMBOL_MULTILINE_CONTENT);
+        $this->content .= $this->withNewLine(Symbol::COMMENT_MULTILINE_CONTENT);
         return $this;
     }
 
     protected function buildComment(): self
     {
         if (!$this->isInlineComment) {
-            $this->content .= self::SYMBOL_MULTILINE_CONTENT;
+            $this->content .= Symbol::COMMENT_MULTILINE_CONTENT;
         }
 
         $this->content .= $this->withNewLine($this->comment);
@@ -186,9 +182,9 @@ class CommentBuilder extends AbstractBuilder
         if (\str_contains($this->description, PHP_EOL)) {
             // ['description', 'description', 'description']
             $descriptions = \explode(PHP_EOL, $this->description);
-            $this->content .= self::SYMBOL_MULTILINE_CONTENT;
+            $this->content .= Symbol::COMMENT_MULTILINE_CONTENT;
             // description\n * description\n * description
-            $this->content .= \implode(PHP_EOL . self::SYMBOL_MULTILINE_CONTENT, $descriptions);
+            $this->content .= \implode(PHP_EOL . Symbol::COMMENT_MULTILINE_CONTENT, $descriptions);
             $this->content .= PHP_EOL;
         } else {
             $this->content .= $this->asMultilineContent($this->description);

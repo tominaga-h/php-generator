@@ -2,8 +2,10 @@
 
 namespace Hytmng\PhpGenerator\Builder;
 
+
 use Hytmng\PhpGenerator\Builder\AbstractBuilder;
 use Hytmng\PhpGenerator\Builder\Trait\Buildable;
+use Hytmng\PhpGenerator\Symbol;
 
 /**
  * HTMLタグを生成するビルダー
@@ -274,6 +276,6 @@ class HtmlTagBuilder extends AbstractBuilder
 	 */
 	protected function getIndentSpace(int $level = 1): string
 	{
-		return \str_repeat(' ', $this->indentSpaceLength * $level);
+		return \str_repeat(Symbol::SPACE, $this->indentSpaceLength * $level);
 	}
 }

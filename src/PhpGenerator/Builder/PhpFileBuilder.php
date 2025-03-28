@@ -2,7 +2,7 @@
 
 namespace Hytmng\PhpGenerator\Builder;
 
-use Hytmng\PhpGenerator\PhpSyntax;
+use Hytmng\PhpGenerator\Symbol;
 use Hytmng\PhpGenerator\Builder\AbstractBuilder;
 class PhpFileBuilder extends AbstractBuilder
 {
@@ -29,16 +29,16 @@ class PhpFileBuilder extends AbstractBuilder
 	 */
 	public function setNamespace(string $namespace): self
 	{
-		if (\str_starts_with($namespace, PhpSyntax::NAMESPACE_SEPARATOR)) {
-			$namespace = ltrim($namespace, PhpSyntax::NAMESPACE_SEPARATOR);
+		if (\str_starts_with($namespace, Symbol::NAMESPACE_SEPARATOR)) {
+			$namespace = ltrim($namespace, Symbol::NAMESPACE_SEPARATOR);
 		}
 
-		if (\str_ends_with($namespace, PhpSyntax::NAMESPACE_SEPARATOR)) {
-			$namespace = rtrim($namespace, PhpSyntax::NAMESPACE_SEPARATOR);
+		if (\str_ends_with($namespace, Symbol::NAMESPACE_SEPARATOR)) {
+			$namespace = rtrim($namespace, Symbol::NAMESPACE_SEPARATOR);
 		}
 
-		if (\str_contains($namespace, PhpSyntax::NAMESPACE_SEPARATOR)) {
-			$namespaces = \explode(PhpSyntax::NAMESPACE_SEPARATOR, $namespace);
+		if (\str_contains($namespace, Symbol::NAMESPACE_SEPARATOR)) {
+			$namespaces = \explode(Symbol::NAMESPACE_SEPARATOR, $namespace);
 			$this->namespaces = \array_merge($this->namespaces, $namespaces);
 			return $this;
 		}
@@ -51,7 +51,7 @@ class PhpFileBuilder extends AbstractBuilder
 	 */
 	public function getNamespace(): string
 	{
-		return \implode(PhpSyntax::NAMESPACE_SEPARATOR, $this->namespaces);
+		return \implode(Symbol::NAMESPACE_SEPARATOR, $this->namespaces);
 	}
 
 	public function build(): string
