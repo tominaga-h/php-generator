@@ -113,7 +113,8 @@ class CommentBuilder extends AbstractBuilder
         return $this->buildStart()
             ->buildComment()
             ->buildDescription()
-            ->buildEnd();
+            ->buildEnd()
+            ->getCode();
     }
 
     /**
@@ -132,18 +133,16 @@ class CommentBuilder extends AbstractBuilder
     }
 
     /**
-     * ビルドを終え、ビルド結果の文字列を返す
-     *
-     * @return string ビルド結果の文字列
+     * ビルドを終える
      */
-    protected function buildEnd(): string
+    protected function buildEnd(): self
     {
         if (!$this->isInlineComment) {
             //  */\n
             $this->content .= $this->withNewLine(self::SYMBOL_MULTILINE_END);
         }
 
-        return $this->content;
+        return $this;
     }
 
     /**

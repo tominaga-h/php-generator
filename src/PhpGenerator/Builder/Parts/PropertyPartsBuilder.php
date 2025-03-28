@@ -70,7 +70,8 @@ class PropertyPartsBuilder extends AbstractPartsBuilder
 			->buildVisibility()
 			->buildType()
 			->buildVariable()
-			->buildEnd();
+			->buildEnd()
+			->getCode();
 	}
 
 	protected function buildVisibility(): self

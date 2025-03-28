@@ -26,18 +26,12 @@ class PhpClassBuilderTest extends TestCase
 		$this->builder = new PhpClassBuilder('TestClass');
 	}
 
-	public function testClassName()
-	{
-		$actual = $this->builder->getClassName();
-		$expected = 'TestClass';
-		$this->assertEquals($expected, $actual);
-	}
-
 	public function testExtends_withNamespace()
 	{
 		$this->builder->extends(AbstractBuilder::class);
+		$this->builder->buildExtends();
 
-		$actual = $this->builder->buildExtends();
+		$actual = $this->builder->getCode();
 		$expected = 'extends AbstractBuilder';
 		$this->assertEquals($expected, $actual);
 	}
@@ -45,24 +39,19 @@ class PhpClassBuilderTest extends TestCase
 	public function testExtends_withoutNamespace()
 	{
 		$this->builder->extends('AbstractBuilder');
+		$this->builder->buildExtends();
 
-		$actual = $this->builder->buildExtends();
+		$actual = $this->builder->getCode();
 		$expected = 'extends AbstractBuilder';
-		$this->assertEquals($expected, $actual);
-	}
-
-	public function testExtends_null()
-	{
-		$actual = $this->builder->buildExtends();
-		$expected = null;
 		$this->assertEquals($expected, $actual);
 	}
 
 	public function testImplements_withNamespace()
 	{
 		$this->builder->implements(StringBuilderInterface::class);
+		$this->builder->buildImplements();
 
-		$actual = $this->builder->buildImplements();
+		$actual = $this->builder->getCode();
 		$expected = 'implements StringBuilderInterface';
 		$this->assertEquals($expected, $actual);
 	}
@@ -70,26 +59,20 @@ class PhpClassBuilderTest extends TestCase
 	public function testImplements_withoutNamespace()
 	{
 		$this->builder->implements('StringBuilderInterface');
+		$this->builder->buildImplements();
 
-		$actual = $this->builder->buildImplements();
+		$actual = $this->builder->getCode();
 		$expected = 'implements StringBuilderInterface';
 		$this->assertEquals($expected, $actual);
-
 	}
 
 	public function testImplements_multiple()
 	{
 		$this->builder->implements('StringBuilderInterface')->implements('Interface');
+		$this->builder->buildImplements();
 
-		$actual = $this->builder->buildImplements();
+		$actual = $this->builder->getCode();
 		$expected = 'implements StringBuilderInterface, Interface';
-		$this->assertEquals($expected, $actual);
-	}
-
-	public function testImplements_null()
-	{
-		$actual = $this->builder->buildImplements();
-		$expected = null;
 		$this->assertEquals($expected, $actual);
 	}
 }

@@ -71,14 +71,13 @@ class PhpClassBuilder extends AbstractBuilder
 		return $this;
 	}
 
-	public function buildExtends(): ?string
+	public function buildExtends(): self
 	{
-		if (\is_null($this->extends)) {
-			return null;
+		if (!\is_null($this->extends)) {
+			$this->content .= 'extends ' . $this->extends;
 		}
 
-		$this->content .= 'extends ' . $this->extends;
-		return $this->content;
+		return $this;
 	}
 
 	/**
@@ -94,14 +93,13 @@ class PhpClassBuilder extends AbstractBuilder
 		return $this;
 	}
 
-	public function buildImplements(): ?string
+	public function buildImplements(): self
 	{
-		if (\count($this->implements) === 0) {
-			return null;
+		if (\count($this->implements) !== 0) {
+			$this->content .= 'implements ' . \implode(', ', $this->implements);
 		}
 
-		$this->content .= 'implements ' . \implode(', ', $this->implements);
-		return $this->content;
+		return $this;
 	}
 
 	/**
@@ -112,12 +110,6 @@ class PhpClassBuilder extends AbstractBuilder
 		$this->properties[] = $property;
 		return $this;
 	}
-
-	public function getClassName(): string
-	{
-		return $this->className;
-	}
-
 
 	public function build(): string
 	{
