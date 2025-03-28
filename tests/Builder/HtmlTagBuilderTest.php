@@ -82,4 +82,16 @@ class HtmlTagBuilderTest extends TestCase
 		$this->assertEquals($expected, $actual);
 	}
 
+	public function testBuild_multipleSameAttributes()
+	{
+		$this->builder
+			->addTagAttribute('class', 'btn')
+			->addTagAttribute('class', 'btn-primary')
+			->setAsSelfClosingTag();
+
+		$actual = $this->builder->build();
+		$expected = "<div class=\"btn btn-primary\" />\n";
+		$this->assertEquals($expected, $actual);
+	}
+
 }

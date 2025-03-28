@@ -93,10 +93,26 @@ class HtmlTagBuilder extends AbstractBuilder
 
 	/**
 	 * タグの属性を追加する
+	 *
+	 * @param string $name 属性の名称
+	 * @param string|array $value 属性の値
+	 * @return self
 	 */
 	public function addTagAttribute(string $name, string|array $value): self
 	{
-		$this->tagAttributes[$name] = $value;
+		// 既に同じ属性が存在する場合
+		if (isset($this->tagAttributes[$name])) {
+			$currentValue = $this->tagAttributes[$name];
+			if (\is_array($currentValue)) {
+				// 属性の値が配列の場合は追加
+				$this->tagAttributes[$name][] = $value;
+			} else {
+				// 配列に変換
+				$this->tagAttributes[$name] = [$currentValue, $value];
+			}
+		} else {
+			$this->tagAttributes[$name] = $value;
+		}
 		return $this;
 	}
 
