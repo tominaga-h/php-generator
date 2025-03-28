@@ -32,7 +32,7 @@
 
 - [x] タグビルダーの実装開始
 - [x] tagContentにインデントを付与
-- [ ] 複数行のtagContentに対応+インデントレベル
+- [x] 複数行のtagContentに対応+インデントレベル
 
 ## PartsBuilder
 
