@@ -82,4 +82,9 @@ class HtmlTagBuilderTest extends TestCase
 		$this->assertEquals($expected, $actual);
 	}
 
+	public function testAddTagAttribute_throw()
+	{
+		$this->expectException(\Exception::class);
+		$this->builder->addTagAttribute('id', 'id')->addTagAttribute('id', 'id');
+	}
 }

@@ -93,9 +93,15 @@ class HtmlTagBuilder extends AbstractBuilder
 
 	/**
 	 * タグの属性を追加する
+	 *
+	 * @throws \Exception 同じ属性が既に存在した場合
 	 */
 	public function addTagAttribute(string $name, string|array $value): self
 	{
+		if (isset($this->tagAttributes[$name])) {
+			throw new \Exception('同じ属性が既に存在します');
+		}
+
 		$this->tagAttributes[$name] = $value;
 		return $this;
 	}
