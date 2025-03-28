@@ -24,7 +24,7 @@ class HtmlTagBuilderTest extends TestCase
 			->setTagContent('content');
 
 		$actual = $this->builder->build();
-		$expected = "<div id=\"id\">\ncontent\n</div>\n";
+		$expected = "<div id=\"id\">\n    content\n</div>\n";
 		$this->assertEquals($expected, $actual);
 	}
 
@@ -46,7 +46,7 @@ class HtmlTagBuilderTest extends TestCase
 			->setTagContent('content');
 
 		$actual = $this->builder->build();
-		$expected = "<div style=\"color: red; font-size: 12px;\">\ncontent\n</div>\n";
+		$expected = "<div style=\"color: red; font-size: 12px;\">\n    content\n</div>\n";
 		$this->assertEquals($expected, $actual);
 	}
 
@@ -58,7 +58,7 @@ class HtmlTagBuilderTest extends TestCase
 			->setTagContent('content');
 
 		$actual = $this->builder->build();
-		$expected = "<div id=\"button\" class=\"btn btn-primary\">\ncontent\n</div>\n";
+		$expected = "<div id=\"button\" class=\"btn btn-primary\">\n    content\n</div>\n";
 		$this->assertEquals($expected, $actual);
 	}
 
@@ -86,5 +86,16 @@ class HtmlTagBuilderTest extends TestCase
 	{
 		$this->expectException(\Exception::class);
 		$this->builder->addTagAttribute('id', 'id')->addTagAttribute('id', 'id');
+	}
+
+	public function testSetIndentSpaceLength()
+	{
+		$this->builder
+			->setIndentSpaceLength(2)
+			->setTagContent('content');
+
+		$actual = $this->builder->build();
+		$expected = "<div>\n  content\n</div>\n";
+		$this->assertEquals($expected, $actual);
 	}
 }

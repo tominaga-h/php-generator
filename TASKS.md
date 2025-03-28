@@ -31,7 +31,7 @@
 ### HtmlTagBuilder
 
 - [x] タグビルダーの実装開始
-- [ ] tagContentにインデントを付与
+- [x] tagContentにインデントを付与
 - [ ] 複数行のtagContentに対応+インデントレベル
 
 ## PartsBuilder

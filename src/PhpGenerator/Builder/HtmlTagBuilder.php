@@ -20,6 +20,8 @@ class HtmlTagBuilder extends AbstractBuilder
 	protected array $tagAttributes;
 	// タグの内容
 	protected string $tagContent;
+	// インデントのスペース数
+	protected int $indentSpaceLength = 4;
 
 	// 強制的にセルフクロージングタグになるタグ（br、imgなど）
 	protected const VOID_TAGS = [
@@ -69,6 +71,12 @@ class HtmlTagBuilder extends AbstractBuilder
 		return $this;
 	}
 
+	public function setIndentSpaceLength(int $indentSpaceLength): self
+	{
+		$this->indentSpaceLength = $indentSpaceLength;
+		return $this;
+	}
+
 	/**
 	 * タグの内容を設定する
 	 *
@@ -86,7 +94,7 @@ class HtmlTagBuilder extends AbstractBuilder
 	protected function buildTagContent(): self
 	{
 		if (!$this->isSelfClosing) {
-			$this->content .= $this->withNewLine($this->tagContent);
+			$this->content .= $this->withNewLine($this->withIndent($this->tagContent));
 		}
 		return $this;
 	}
@@ -237,5 +245,24 @@ class HtmlTagBuilder extends AbstractBuilder
 	protected function attachAttribute(string $name, string $value): string
 	{
 		return $name . '="' . $value . '"';
+	}
+
+	/**
+	 * インデントを付与した文字列を返す
+	 */
+	protected function withIndent(string $content, int $level = 1): string
+	{
+		return $this->getIndentSpace($level) . $content;
+	}
+
+	/**
+	 * インデントの半角スペースを返す
+	 *
+	 * @param int $level インデントのレベル
+	 * @return string
+	 */
+	protected function getIndentSpace(int $level = 1): string
+	{
+		return \str_repeat(' ', $this->indentSpaceLength * $level);
 	}
 }
