@@ -68,4 +68,18 @@ class HtmlTagBuilderTest extends TestCase
 		$this->builder->setAsSelfClosingTag()->setTagContent('content');
 	}
 
+	public function testBuild_voidTag()
+	{
+		$this->builder = new HtmlTagBuilder('br');
+
+		$actual = $this->builder->isVoidTag();
+		$this->assertTrue($actual);
+
+		$this->builder = new HtmlTagBuilder('img');
+
+		$actual = $this->builder->build();
+		$expected = "<img />\n";
+		$this->assertEquals($expected, $actual);
+	}
+
 }

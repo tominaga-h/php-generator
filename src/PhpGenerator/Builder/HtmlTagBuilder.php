@@ -13,7 +13,7 @@ class HtmlTagBuilder extends AbstractBuilder
 	use Buildable;
 
 	// タグの名前
-	protected string $tagName;
+	protected string $tagName = '';
 	// セルフクロージングタグかどうか
 	protected bool $isSelfClosing = false;
 	// タグの属性
@@ -21,12 +21,43 @@ class HtmlTagBuilder extends AbstractBuilder
 	// タグの内容
 	protected string $tagContent;
 
+	// 強制的にセルフクロージングタグになるタグ（br、imgなど）
+	protected const VOID_TAGS = [
+		'br',
+		'img',
+		'input',
+		'link',
+		'meta',
+		'hr',
+		'area',
+	];
+
 	public function __construct(string $tagName)
 	{
-		$this->tagName = $tagName;
+		$this->setTagName($tagName);
 		$this->tagAttributes = [];
 		$this->tagContent = '';
-		// <div id="id" class="class" style="background-color: red;"></div>
+	}
+
+	/**
+	 * タグ名を設定する
+	 */
+	public function setTagName(string $tagName): self
+	{
+		$this->tagName = $tagName;
+
+		if ($this->isVoidTag()) {
+			$this->setAsSelfClosingTag(); // セルフクロージングタグに設定
+		}
+		return $this;
+	}
+
+	/**
+	 * 指定されたタグ名がセルフクロージングタグ(br、imgなど）かどうかを返す
+	 */
+	public function isVoidTag(): bool
+	{
+		return \in_array($this->tagName, self::VOID_TAGS);
 	}
 
 	/**
@@ -107,8 +138,10 @@ class HtmlTagBuilder extends AbstractBuilder
 
 	protected function buildStyleAttribute(array $value): self
 	{
-		// ['background-color' => 'red', 'color' => 'blue']
-		// => style="background-color: red; color: blue;"
+		/**
+		 * ['background-color' => 'red', 'color' => 'blue']
+		 * => style="background-color: red; color: blue;"
+		 */
 
 		$styles = [];
 		foreach ($value as $key => $val) {
@@ -119,29 +152,6 @@ class HtmlTagBuilder extends AbstractBuilder
 		return $this;
 	}
 
-	/**
-	 * 属性の名称と配列の値を結合する
-	 *
-	 * @param string $name 属性の名称
-	 * @param array $value 属性の値
-	 * @return string
-	 */
-	protected function attachArrayAttribute(string $name, array $value): string
-	{
-		return $name . '="' . \implode(' ', $value) . '"';
-	}
-
-	/**
-	 * 属性の名称と値を結合する
-	 *
-	 * @param string $name 属性の名称
-	 * @param string $value 属性の値
-	 * @return string
-	 */
-	protected function attachAttribute(string $name, string $value): string
-	{
-		return $name . '="' . $value . '"';
-	}
 
 
 	public function build(): string
@@ -199,4 +209,27 @@ class HtmlTagBuilder extends AbstractBuilder
 		return $this;
 	}
 
+	/**
+	 * 属性の名称と配列の値を結合する
+	 *
+	 * @param string $name 属性の名称
+	 * @param array $value 属性の値
+	 * @return string
+	 */
+	protected function attachArrayAttribute(string $name, array $value): string
+	{
+		return $name . '="' . \implode(' ', $value) . '"';
+	}
+
+	/**
+	 * 属性の名称と値を結合する
+	 *
+	 * @param string $name 属性の名称
+	 * @param string $value 属性の値
+	 * @return string
+	 */
+	protected function attachAttribute(string $name, string $value): string
+	{
+		return $name . '="' . $value . '"';
+	}
 }
