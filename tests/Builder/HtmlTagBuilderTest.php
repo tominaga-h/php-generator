@@ -98,4 +98,15 @@ class HtmlTagBuilderTest extends TestCase
 		$expected = "<div>\n  content\n</div>\n";
 		$this->assertEquals($expected, $actual);
 	}
+
+	public function testTagContent_multipleLines()
+	{
+		$this->builder
+			->setIndentSpaceLength(2)
+			->setTagContent("line1\nline2");
+
+		$actual = $this->builder->build();
+		$expected = "<div>\n  line1\n  line2\n</div>\n";
+		$this->assertEquals($expected, $actual);
+	}
 }

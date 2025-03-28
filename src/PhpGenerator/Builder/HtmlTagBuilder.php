@@ -93,9 +93,19 @@ class HtmlTagBuilder extends AbstractBuilder
 
 	protected function buildTagContent(): self
 	{
-		if (!$this->isSelfClosing) {
-			$this->content .= $this->withNewLine($this->withIndent($this->tagContent));
+		if ($this->isSelfClosing) {
+			return $this;
 		}
+
+		// 改行を含む場合は、改行ごとにインデントを付与する
+		if (\str_contains($this->tagContent, PHP_EOL)) {
+			$lines = \explode(PHP_EOL, $this->tagContent);
+			$withIndentLines = \array_map(fn($line) => $this->withIndent($line), $lines);
+			$this->content .= $this->withNewLine(\implode(PHP_EOL, $withIndentLines));
+			return $this;
+		}
+
+		$this->content .= $this->withNewLine($this->withIndent($this->tagContent));
 		return $this;
 	}
 
