@@ -22,6 +22,8 @@ class HtmlTagBuilder extends AbstractBuilder
 	protected array $tagAttributes;
 	// タグの内容
 	protected string $tagContent;
+	/** @var HtmlTagBuilder[] $children */
+	protected array $children; // 子要素ビルダー
 	// インデントのスペース数
 	protected int $indentSpaceLength = 4;
 
@@ -41,6 +43,7 @@ class HtmlTagBuilder extends AbstractBuilder
 		$this->setTagName($tagName);
 		$this->tagAttributes = [];
 		$this->tagContent = '';
+		$this->children = [];
 	}
 
 	/**
@@ -84,13 +87,27 @@ class HtmlTagBuilder extends AbstractBuilder
 	 *
 	 * @throws \RuntimeException セルフクロージングタグに内容を設定しようとした場合
 	 */
-	public function setTagContent(string $content): void
+	public function setTagContent(string $content): self
 	{
 		if ($this->isSelfClosing) {
 			throw new \RuntimeException('セルフクロージングタグには内容を設定できません');
 		}
 
 		$this->tagContent = $content;
+		return $this;
+	}
+
+	/**
+	 * インデントを付与した改行を含む文字列を返す
+	 *
+	 * @param string[] $lines 改行を含む文字列の配列
+	 * @return string
+	 */
+	protected function insertIndent(array $lines): string
+	{
+		$withIndentLines = \array_map(fn($line) => $this->withIndent($line), $lines);
+		$newLine = \implode(PHP_EOL, $withIndentLines);
+		return $this->withNewLine(\trim($newLine, PHP_EOL));
 	}
 
 	protected function buildTagContent(): self
@@ -102,13 +119,37 @@ class HtmlTagBuilder extends AbstractBuilder
 		// 改行を含む場合は、改行ごとにインデントを付与する
 		if (\str_contains($this->tagContent, PHP_EOL)) {
 			$lines = \explode(PHP_EOL, $this->tagContent);
-			$withIndentLines = \array_map(fn($line) => $this->withIndent($line), $lines);
-			$newLine = \implode(PHP_EOL, $withIndentLines);
-			$this->content .= $this->withNewLine(\trim($newLine, PHP_EOL));
+			$this->content .= $this->insertIndent($lines);
 			return $this;
 		}
 
 		$this->content .= $this->withNewLine($this->withIndent($this->tagContent));
+		return $this;
+	}
+
+	/**
+	 * 子要素を追加する
+	 *
+	 * @param HtmlTagBuilder $child 追加する子要素のビルダー
+	 */
+	public function appendChild(HtmlTagBuilder $child): self
+	{
+		$this->children[] = $child;
+		return $this;
+	}
+
+	public function buildChildrenTags(): self
+	{
+		foreach ($this->children as $child) {
+			$line = $child->build();
+			if (\str_contains($line, PHP_EOL)) {
+				$lines = \explode(PHP_EOL, $line);
+				$this->content .= $this->insertIndent($lines);
+			} else {
+				$this->content .= $this->withNewLine($this->withIndent($line));
+			}
+		}
+
 		return $this;
 	}
 
@@ -198,6 +239,7 @@ class HtmlTagBuilder extends AbstractBuilder
 			->buildTagAttributes()
 			->buildOpenTagEnd()
 			->buildTagContent()
+			->buildChildrenTags()
 			->buildCloseTag()
 			->buildEnd()
 			->getCode();

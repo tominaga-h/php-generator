@@ -9,8 +9,8 @@ $middle = new HtmlTagBuilder('p');
 $inner = new HtmlTagBuilder('span');
 
 $inner->setTagContent('inner');
-$middle->setTagContent("middle\n" . $inner->build());
-$outer->setTagContent("outer\n" . $middle->build());
+$middle->setTagContent('middle')->appendChild($inner);
+$outer->setTagContent('outer')->appendChild($middle);
 
 echo $outer->build() . PHP_EOL;
 
