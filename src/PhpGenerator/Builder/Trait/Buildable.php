@@ -60,6 +60,15 @@ trait Buildable
     }
 
     /**
+     * 改行をビルドする
+     */
+    protected function buildNewLine(): self
+    {
+        $this->content .= PHP_EOL;
+        return $this;
+    }
+
+    /**
      * 指定された変数名に$を付与する
      *
      * @param string $varName 変数名

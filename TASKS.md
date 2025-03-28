@@ -7,6 +7,10 @@
 
 ## Builder
 
+## PhpFileBuilder
+
+- [x] 名前空間の処理を移植
+
 ### PhpClassBuilder
 
 - [x] 名前空間の設定・取得
@@ -23,6 +27,12 @@
 - [x] 標準的なコメントのビルド
 - [x] コメントビルドのテスト
 - [ ] PhpDocのビルド（別クラスにするかも）
+
+### HtmlTagBuilder
+
+- [x] タグビルダーの実装開始
+- [ ] tagContentにインデントを付与
+- [ ] 複数行のtagContentに対応+インデントレベル
 
 ## PartsBuilder
 
