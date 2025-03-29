@@ -32,11 +32,21 @@ trait Formattable
 	}
 
 	/**
-	 * インデントを付与した文字列を返す
+	 * 指定した文字列にインデントを付与する（複数行にも対応）
+	 *
+	 * @param string $content
+	 * @return string
 	 */
-	protected function withIndent(string $content, int $level = 1): string
+	protected function insertIndent(string $content): string
 	{
-		return $this->getIndentSpace($level) . $content;
+		if ($this->containsNewLine($content)) {
+			$lines = \explode(PHP_EOL, $content);
+			$withIndentLines = \array_map(fn($line) => $this->withIndent($line), $lines);
+			$newLine = \implode(PHP_EOL, $withIndentLines);
+			return $this->withNewLine(\trim($newLine, PHP_EOL));
+		} else {
+			return $this->withNewLine($this->withIndent($content));
+		}
 	}
 
 	/**
@@ -65,6 +75,22 @@ trait Formattable
 	protected function withNewLine(string $str): string
 	{
 		return $str . PHP_EOL;
+	}
+
+	/**
+	 * インデントを付与した文字列を返す
+	 */
+	protected function withIndent(string $content, int $level = 1): string
+	{
+		return $this->getIndentSpace($level) . $content;
+	}
+
+	/**
+	 * 指定された文字列が改行を含むかどうかを返す
+	 */
+	protected function containsNewLine(string $content): bool
+	{
+		return \str_contains($content, PHP_EOL);
 	}
 
 }

@@ -90,18 +90,6 @@ class HtmlTagBuilder extends AbstractBuilder
 		return $this;
 	}
 
-	/**
-	 * インデントを付与した改行を含む文字列を返す
-	 *
-	 * @param string[] $lines 改行を含む文字列の配列
-	 * @return string
-	 */
-	protected function insertIndent(array $lines): string
-	{
-		$withIndentLines = \array_map(fn($line) => $this->withIndent($line), $lines);
-		$newLine = \implode(PHP_EOL, $withIndentLines);
-		return $this->withNewLine(\trim($newLine, PHP_EOL));
-	}
 
 	protected function buildTagContent(): self
 	{
@@ -109,14 +97,7 @@ class HtmlTagBuilder extends AbstractBuilder
 			return $this;
 		}
 
-		// 改行を含む場合は、改行ごとにインデントを付与する
-		if (\str_contains($this->tagContent, PHP_EOL)) {
-			$lines = \explode(PHP_EOL, $this->tagContent);
-			$this->content .= $this->insertIndent($lines);
-			return $this;
-		}
-
-		$this->content .= $this->withNewLine($this->withIndent($this->tagContent));
+		$this->content .= $this->insertIndent($this->tagContent);
 		return $this;
 	}
 
@@ -134,13 +115,8 @@ class HtmlTagBuilder extends AbstractBuilder
 	public function buildChildrenTags(): self
 	{
 		foreach ($this->children as $child) {
-			$line = $child->build();
-			if (\str_contains($line, PHP_EOL)) {
-				$lines = \explode(PHP_EOL, $line);
-				$this->content .= $this->insertIndent($lines);
-			} else {
-				$this->content .= $this->withNewLine($this->withIndent($line));
-			}
+			$code = $child->build();
+			$this->content .= $this->insertIndent($code);
 		}
 
 		return $this;
