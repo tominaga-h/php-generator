@@ -12,16 +12,16 @@ abstract class AbstractBuilder implements StringBuilderInterface
     protected string $content;
 
     /**
+     * 文字列を構築する
+     */
+    abstract public function build(): string;
+
+    /**
      * 構築した文字列を返す
      */
     public function getCode(): string
     {
         return $this->content;
     }
-
-    /**
-     * 文字列を構築する
-     */
-    abstract public function build(): string;
 
 }
