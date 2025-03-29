@@ -93,10 +93,6 @@ class HtmlTagBuilder extends AbstractBuilder
 
 	protected function buildTagContent(): self
 	{
-		if ($this->isSelfClosing) {
-			return $this;
-		}
-
 		$this->content .= $this->insertIndent($this->tagContent);
 		return $this;
 	}
