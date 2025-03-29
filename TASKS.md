@@ -49,6 +49,10 @@
 
 - [x] ビルド系ユーティリティメソッドを提供
 
+### Formattable
+
+- [x] 整形系メソッドを移譲
+
 ### Commentable
 
 - [x] CommentBuilderのビルドメソッドをCommentableに継承
