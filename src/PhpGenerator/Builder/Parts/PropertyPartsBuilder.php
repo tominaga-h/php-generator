@@ -7,6 +7,7 @@ use Hytmng\PhpGenerator\Builder\Enum\PhpVisibilityType;
 use Hytmng\PhpGenerator\Builder\Enum\PhpVariableType;
 use Hytmng\PhpGenerator\Builder\Trait\Buildable;
 use Hytmng\PhpGenerator\Builder\Trait\Commentable;
+use Hytmng\PhpGenerator\Builder\Trait\Formattable;
 use Hytmng\PhpGenerator\Builder\CommentBuilder;
 
 /**
@@ -14,7 +15,7 @@ use Hytmng\PhpGenerator\Builder\CommentBuilder;
  */
 class PropertyPartsBuilder extends AbstractPartsBuilder
 {
-	use Buildable;
+	use Buildable, Formattable;
 	use Commentable;
 
 	// 変数名

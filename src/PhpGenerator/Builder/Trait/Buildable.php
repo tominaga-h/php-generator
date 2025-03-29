@@ -38,25 +38,6 @@ trait Buildable
         return $this;
     }
 
-    /**
-     * 指定した文字列の右側に半角スペースを追加する
-     *
-     * @param string $str
-     */
-    protected function withSpaceRight(string $str): string
-    {
-        return $str . Symbol::SPACE;
-    }
-
-    /**
-     * 指定した文字列の左側に半角スペースを追加する
-     *
-     * @param string $str
-     */
-    protected function withSpaceLeft(string $str): string
-    {
-        return Symbol::SPACE . $str;
-    }
 
     /**
      * 指定された変数名に$を付与する
@@ -68,11 +49,4 @@ trait Buildable
         return Symbol::VAR . $varName;
     }
 
-	/**
-	 * 指定された文字列の右側に改行を追加する
-	 */
-	protected function withNewLine(string $str): string
-	{
-		return $str . PHP_EOL;
-	}
 }

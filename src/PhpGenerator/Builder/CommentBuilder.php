@@ -4,6 +4,7 @@ namespace Hytmng\PhpGenerator\Builder;
 
 use Hytmng\PhpGenerator\Builder\AbstractBuilder;
 use Hytmng\PhpGenerator\Builder\Trait\Buildable;
+use Hytmng\PhpGenerator\Builder\Trait\Formattable;
 use Hytmng\PhpGenerator\Symbol;
 
 /**
@@ -11,7 +12,7 @@ use Hytmng\PhpGenerator\Symbol;
  */
 class CommentBuilder extends AbstractBuilder
 {
-    use Buildable;
+    use Buildable, Formattable;
 
     // コメント
     protected string $comment;

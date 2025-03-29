@@ -5,6 +5,7 @@ namespace Hytmng\PhpGenerator\Builder;
 
 use Hytmng\PhpGenerator\Builder\AbstractBuilder;
 use Hytmng\PhpGenerator\Builder\Trait\Buildable;
+use Hytmng\PhpGenerator\Builder\Trait\Formattable;
 use Hytmng\PhpGenerator\Symbol;
 
 /**
@@ -12,7 +13,7 @@ use Hytmng\PhpGenerator\Symbol;
  */
 class HtmlTagBuilder extends AbstractBuilder
 {
-	use Buildable;
+	use Buildable, Formattable;
 
 	// タグの名前
 	protected string $tagName = '';
@@ -24,8 +25,6 @@ class HtmlTagBuilder extends AbstractBuilder
 	protected string $tagContent;
 	/** @var HtmlTagBuilder[] $children */
 	protected array $children; // 子要素ビルダー
-	// インデントのスペース数
-	protected int $indentSpaceLength = 4;
 
 	// 強制的にセルフクロージングタグになるタグ（br、imgなど）
 	protected const VOID_TAGS = [
@@ -73,12 +72,6 @@ class HtmlTagBuilder extends AbstractBuilder
 	public function setAsSelfClosingTag(): self
 	{
 		$this->isSelfClosing = true;
-		return $this;
-	}
-
-	public function setIndentSpaceLength(int $indentSpaceLength): self
-	{
-		$this->indentSpaceLength = $indentSpaceLength;
 		return $this;
 	}
 
@@ -302,22 +295,5 @@ class HtmlTagBuilder extends AbstractBuilder
 		return $name . '="' . $value . '"';
 	}
 
-	/**
-	 * インデントを付与した文字列を返す
-	 */
-	protected function withIndent(string $content, int $level = 1): string
-	{
-		return $this->getIndentSpace($level) . $content;
-	}
 
-	/**
-	 * インデントの半角スペースを返す
-	 *
-	 * @param int $level インデントのレベル
-	 * @return string
-	 */
-	protected function getIndentSpace(int $level = 1): string
-	{
-		return \str_repeat(Symbol::SPACE, $this->indentSpaceLength * $level);
-	}
 }
